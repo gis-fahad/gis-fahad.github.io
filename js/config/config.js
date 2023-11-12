@@ -1,61 +1,53 @@
-import { setCookieWithExpireHour } from "https://jscroot.github.io/cookie/croot.js";
+import Map from 'https://cdn.skypack.dev/ol/Map.js';
+import View from 'https://cdn.skypack.dev/ol/View.js';
+import TileLayer from 'https://cdn.skypack.dev/ol/layer/Tile.js';
+import XYZ from 'https://cdn.skypack.dev/ol/source/XYZ.js';
+import OSM from 'https://cdn.skypack.dev/ol/source/OSM.js';
+import {fromLonLat} from 'https://cdn.skypack.dev/ol/proj.js';
+import Overlay from 'https://cdn.skypack.dev/ol/Overlay.js';
+import {container} from 'https://jscroot.github.io/element/croot.js';
 
-//token
-export function getTokenFromAPI() {
-  const tokenUrl =
-    "https://us-central1-fahad-402509.cloudfunctions.net/gis5login";
-  fetch(tokenUrl)
-    .then((response) => response.json())
-    .then((tokenData) => {
-      if (tokenData.token) {
-        userToken = tokenData.token;
-        console.log("Token dari API:", userToken);
-      }
-    })
-    .catch((error) => console.error("Gagal mengambil token:", error));
-}
-export function GetDataForm() {
-  const username = document.querySelector("#username").value;
-  const password = document.querySelector("#password").value;
-  console.log(password);
+const attributions = '<a href="https://petapedia.github.io/" target="_blank">&copy; PetaPedia Indonesia</a> ';
 
-  const data = {
-    username: username,
-    password: password,
-  };
-  return data;
-}
-//login
-export function PostLogin() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+const place = [107.90490500781718, -7.215896821868576];
 
-  const data = {
-    username: username,
-    password: password,
-  };
-  return data;
-}
+export let idmarker = {id:1};
 
-export function AlertPost(value) {
-  alert(value.message + "\nRegistrasi Berhasil");
-  window.location.href = "login.html";
-}
+const basemap = new TileLayer({
+    source: new OSM({
+        attributions: attributions,
+      }),
+});
 
-function ResponsePostLogin(response) {
-  if (response && response.token) {
-    console.log("Token User:", response.token);
-    setCookieWithExpireHour("user_token", response.token, 2);
-    window.location.href = "https://fahadabdul17.github.io/gis-post/";
-    alert("Selamat Datang");
-  } else {
-    alert("Login gagal. Silakan coba lagi.");
-  }
-}
+const defaultstartmap = new View({
+  center: fromLonLat(place),
+  zoom: 17,
+});
 
-export function ResponsePost(result) {
-  AlertPost(result);
-}
-export function ResponseLogin(result) {
-  ResponsePostLogin(result);
-}
+export const overlay = new Overlay({
+    element: container('popup'),
+    autoPan: {
+      animation: {
+        duration: 250,
+      },
+    },
+  });
+
+export const popupinfo = new Overlay({
+    element: container('popupinfo'),
+    autoPan: {
+      animation: {
+        duration: 250,
+      },
+    },
+});
+
+export let map = new Map({
+  layers: [
+        basemap
+    ],
+  overlays: [overlay,popupinfo],
+  target: 'map',
+  view: defaultstartmap,
+});
+

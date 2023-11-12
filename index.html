@@ -1,115 +1,106 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0ed3cf">
-    <meta name="msapplication-TileColor" content="#0ed3cf">
-    <meta name="theme-color" content="#0ed3cf">
-
-    <meta property="og:image"
-        content="https://tailwindcomponents.com/storage/3276/conversions/temp56677-ogimage.jpg?v=2023-10-27 02:23:34" />
-    <meta property="og:image:width" content="1280" />
-    <meta property="og:image:height" content="640" />
-    <meta property="og:image:type" content="image/png" />
-
-    <meta property="og:url" content="https://tailwindcomponents.com/component/formulario-de-registro/landing" />
-    <meta property="og:title" content="Formulario de registro by Cristian Mosquera Mosquera" />
-    <meta property="og:description" content="Simple formulario de registro" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@TwComponents" />
-    <meta name="twitter:title" content="Formulario de registro by Cristian Mosquera Mosquera" />
-    <meta name="twitter:description" content="Simple formulario de registro" />
-    <meta name="twitter:image"
-        content="https://tailwindcomponents.com/storage/3276/conversions/temp56677-ogimage.jpg?v=2023-10-27 02:23:34" />
-
-    <link rel="canonical" href="https://tailwindcomponents.com/component/formulario-de-registro" itemprop="URL">
-
-    <title>Login Form</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Function dan MongoDB</title>
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 </head>
 
-<body class="bg-gray-200">
-    <div class="fixed bottom-0 left-0 right-0 z-40 px-4 py-3 text-center text-white bg-gray-800">
-        Copyright fahad abdul aziz
-        <a class="text-gray-200 underline"
-            href="https://tailwindcomponents.com/component/formulario-de-registro">Component details</a>
+<body>
+
+    <div class="intro">
+        <h3>Fahad Abdul Aziz - 1214030</h3>
+        <h3>D4 Teknik Informatika 3A</h3>
+    </div><br>
+
+    <div id='map'></div>
+    <div class="col-auto mt-4">
+        <span class="input-group">
+            <label class="input-group-text" for="type">Geometry type:</label>
+            <select class="form-select" id="type">
+                <option value="Point">Point</option>
+                <option value="LineString">LineString</option>
+                <option value="Polygon">Polygon</option>
+                <option value="Circle">Circle</option>
+                <option value="None">None</option>
+            </select>
+            <input class="form-control" type="button" value="Undo" id="undo">
+        </span>
     </div>
-    <div class="font-sans">
-        <div class="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100 ">
-            <div class="relative sm:max-w-sm w-full">
-                <div class="card bg-blue-400 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>
-                <div class="card bg-red-400 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6"></div>
-                <div class="relative w-full rounded-3xl  px-6 py-4 bg-gray-100 shadow-md">
-                    <label  for="" class="block mt-3 text-sm text-gray-700 text-center font-semibold">
-                        Login Form
-                    </label>
-                    <form id= "formlogin" method="#" action="#" class="mt-10">
-                        <div class="mt-7">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" placeholder="username" required=""
-                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0">
-                        </div>
-                        
-                        <div class="mt-7">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" placeholder="password"
-                                class="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0">
-                        </div>
-                        
-                        <div class="mt-7">
-                            <button id="submit"
-                                class="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                                Login
-                            </button>
-                        </div>
 
-                        <div class="flex mt-7 items-center text-center">
-                            <hr class="border-gray-300 border-1 w-full rounded-md">
-                            <label class="block font-medium text-sm text-gray-600 w-full">
-                                Login With
-                            </label>
-                            <hr class="border-gray-300 border-1 w-full rounded-md">
-                        </div>
+    <input type="hidden" id="idmarker" name="idmarker" value="">
 
-                        <div class="flex mt-7 justify-center w-full">
-                            <button
-                                class="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+    <div id="popupinfo" class="ol-popup">
+        <b id="popupinfo-title"></b>
+        <div id="popupinfo-content"></div>
+        <div id="popupinfo-delete">
+            <input type="hidden" id="idmarker" name="idmarker" value="">
+            <button id="hapusbutton" type="button">Hapus</button><button id="hitungcogbutton" type="button">Hitung
+                COG</button><br>
+        </div>
 
-                                Facebook
-                            </button>
+    </div>
 
-                            <button
-                                class="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-
-                                Google
-                            </button>
-                        </div>
-
-                        <div class="mt-7">
-                            <div class="flex justify-center items-center">
-                                <label class="mr-2">Belum Punya Akun?</label>
-                                <a href="register.html"
-                                    class=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                                    Register
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div id="popup" class="ol-popup">
+        <b id="popup-title">Input Center of Gravity</b><a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+        <div id="popup-input">
+            Nama : <input type="text" id="name" name="name" required><br>
+            Volume : <input type="text" id="volume" name="volume" required><br>
+            <input type="hidden" id="long" name="long" value="">
+            <input type="hidden" id="lat" name="lat" value="">
+            <button id="insertmarkerbutton" type="button">Input</button><br>
         </div>
     </div>
+    <div id="info-table">
+        <div class="point-table">
+            <br>
+            <h3 style="text-align: center;">Data Point</h3>
+            <table id="pointTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Koordinat</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="waypointbody"></tbody>
+            </table>
+        </div>
+
+        <div class="polygon-table"><br>
+            <h3 style="text-align: center;">Data Polygon</h3>
+            <table id="polygonTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Koordinat</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="polygonbody"></tbody>
+            </table>
+        </div>
+
+        <div class="polyline-table"><br>
+            <h3 style="text-align: center;">Data LineString</h3>
+            <table id="polylineTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Koordinat</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="polylinebody"></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.1.0/dist/ol.js"></script>
+    <script type="module" src="./js/main.js"></script>
 </body>
-<script type="module" src="./js/controller/controller.js"></script>
 
 </html>
