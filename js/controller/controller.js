@@ -17,29 +17,30 @@ export function getTokenFromAPI() {
       .catch(error => console.error('Gagal mengambil token:', error));
   }
 
-export function isiRowPoint(value){
+  export function isiRowPoint(value) {
     if (value.geometry.type === "Point") {
-    let content=tableTemplate.replace("#TYPE#",value.geometry.type).replace("#NAME#",value.properties.name).replace("#KORDINAT#",value.geometry.coordinates);
-    // console.log(content);
-    addChild("lokasi",tableTag,tableRowClass,content);
+        let content = tableTemplate.replace("#TYPE#", value.geometry.type).replace("#NAME#", value.properties.name).replace("#KORDINAT#", value.geometry.coordinates);
+        // console.log(content);
+        addChild("waypointbody", tableTag, tableRowClass, content);
     }
 }
 
-export function isiRowPolygon(value){
+export function isiRowPolygon(value) {
     if (value.geometry.type === "Polygon") {
-    let content=tableTemplate.replace("#TYPE#",value.geometry.type).replace("#NAME#",value.properties.name).replace("#KORDINAT#",value.geometry.coordinates);
-    // console.log(content);
-    addChild("polygon",tableTag,tableRowClass,content);
+        let content = tableTemplate.replace("#TYPE#", value.geometry.type).replace("#NAME#", value.properties.name).replace("#KORDINAT#", value.geometry.coordinates);
+        // console.log(content);
+        addChild("polygonbody", tableTag, tableRowClass, content);
     }
 }
 
-export function isiRowPolyline(value){
+export function isiRowPolyline(value) {
     if (value.geometry.type === "LineString") {
-    let content=tableTemplate.replace("#TYPE#",value.geometry.type).replace("#NAME#",value.properties.name).replace("#KORDINAT#",value.geometry.coordinates);
-    // console.log(content);
-    addChild("line",tableTag,tableRowClass,content);
+        let content = tableTemplate.replace("#TYPE#", value.geometry.type).replace("#NAME#", value.properties.name).replace("#KORDINAT#", value.geometry.coordinates);
+        // console.log(content);
+        addChild("polylinebody", tableTag, tableRowClass, content);
     }
 }
+
 
 export function MakeGeojsonFromAPI(value) {
     const geojsonFeatureCollection = {
@@ -49,15 +50,20 @@ export function MakeGeojsonFromAPI(value) {
 
     const geojsonString = JSON.stringify(geojsonFeatureCollection, null, 2);
 
-    const blob = new Blob([geojsonString], { type: "application/json" });
+    const blob = new Blob([geojsonString], {
+        type: "application/json"
+    });
 
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
     link.href = url;
 
+    
+
     return link;
 }
+
 
 export function drawer(geojson) {
     const source = new ol.source.Vector({
@@ -124,7 +130,7 @@ export function AddLayerToMAP(geojson){
         source: Sourcedata,
         style: new ol.style.Style({
             image: new ol.style.Icon({
-                src: 'img/icog.png', 
+                src: 'images/icog.png', 
                 scale: 0.5, 
                 opacity: 1
             })
@@ -174,7 +180,7 @@ export function ResponsePostLogin(response) {
     if (response && response.token) {
       console.log('Token User:', response.token);
       setCookieWithExpireHour('Login', response.token, 3);
-      window.location.href = 'https://gis-fahad.github.io/';
+      window.location.href = 'https://gis-fahad.github.io/index.html';
       alert("Selamat Datang")
     } else {
       alert('Login gagal. Silakan coba lagi.');
