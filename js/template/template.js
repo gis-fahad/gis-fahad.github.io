@@ -1,6 +1,3 @@
-// export let URLLogin = `https://us-central1-fahad-402509.cloudfunctions.net/gis5login`
-// export let token = 'token';
-
 import {getCookie} from "https://jscroot.github.io/cookie/croot.js";
 
 export let URLGeoJson = "https://us-central1-fahad-402509.cloudfunctions.net/gis-gcf";

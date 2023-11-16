@@ -178,16 +178,16 @@ export function responseData(results){
 
 export function ResponsePostLogin(response) {
     if (response && response.token) {
-      console.log('Token User:', response.token);
-      setCookieWithExpireHour('Login', response.token, 3);
-      window.location.href = 'https://gis-fahad.github.io';
-      alert("Selamat Datang")
+    console.log('Token User:', response.token);
+    setCookieWithExpireHour('Login', response.token, 3);
+    window.location.href = 'https://gis-fahad.github.io';
+    alert("Selamat Datang")
     } else {
-      alert('Login gagal. Silakan coba lagi.');
+    alert('Login gagal. Silakan coba lagi.');
     }
-  }
+}
 
-  export function ResponseLogin(result) {
+export function ResponseLogin(result) {
     ResponsePostLogin(result)
   }
 
