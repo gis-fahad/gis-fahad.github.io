@@ -5,19 +5,19 @@ import {map} from '../config/config.js';
 import Draw from 'https://cdn.skypack.dev/ol/interaction/Draw.js';
 
 export function getTokenFromAPI() {
-    const tokenUrl = "https://us-central1-fahad-402509.cloudfunctions.net/gis5login";
+    const tokenUrl = "https://us-central1-fahad-402509.cloudfunctions.net/hadlogin-gis";
     fetch(tokenUrl)
-      .then(response => response.json())
-      .then(tokenData => {
+    .then(response => response.json())
+    .then(tokenData => {
         if (tokenData.token) {
-          userToken = tokenData.token;
-          console.log('Token dari API:', userToken);
+        userToken = tokenData.token;
+        console.log('Token dari API:', userToken);
         }
-      })
-      .catch(error => console.error('Gagal mengambil token:', error));
-  }
+    })
+    .catch(error => console.error('Gagal mengambil token:', error));
+}
 
-  export function isiRowPoint(value) {
+export function isiRowPoint(value) {
     if (value.geometry.type === "Point") {
         let content = tableTemplate.replace("#TYPE#", value.geometry.type).replace("#NAME#", value.properties.name).replace("#KORDINAT#", value.geometry.coordinates);
         // console.log(content);
@@ -68,8 +68,8 @@ export function MakeGeojsonFromAPI(value) {
 export function drawer(geojson) {
     const source = new ol.source.Vector({
         wrapx: false
-      });
-      const Stroke = new ol.layer.Vector({
+    });
+    const Stroke = new ol.layer.Vector({
         source: source,
         style: function (feature) {
             const featureType = feature.getGeometry().getType();
