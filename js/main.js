@@ -8,10 +8,10 @@ import {onClick} from 'https://jscroot.github.io/element/croot.js';
 import {getAllCoordinates} from './controller/cog.js';
 
 
-let cookie = getCookie("Login")
-if (cookie == ""){
-    window.location.href = "login.html"
-}
+// let cookie = getCookie("Login")
+// if (cookie == ""){
+//     window.location.href = "login.html"
+// }
 
 onClick('popup-closer',onClosePopupClick);
 onClick('insertmarkerbutton',onSubmitMarkerClick);
@@ -23,6 +23,13 @@ map.on('click', onMapClick);
 // map.on('click', onMapInput)
 map.on('pointermove', onMapPointerMove);
 map.on('movestart', disposePopover);
+export let allCoordinates = []
+map.on('click', function (event) {
+    let lonLat = ol.proj.toLonLat(event.coordinate);
+    allCoordinates.push(lonLat);
+
+    console.log(lonLat)
+});
 
 
 get(URLGeoJson,data => {
